@@ -52,6 +52,11 @@ confIntVarwMean <- function(arr, G){
   return(c(L, R))
 }
 
+intLen <- function(int){
+  #Длинна интервала
+  len <- abs(max(int) - min(int[2]))
+  return (len)
+}
 
 M = -2   # Mean
 S = 2.5  # Sigma
@@ -72,4 +77,21 @@ interval2 <- confIntMeanwVar(sample2, G); interval2
 
 interval1 <- confIntVarwMean(sample1, G); interval1
 interval2 <- confIntVarwMean(sample2, G); interval2
+
+basePr <- 0.01
+
+confProps <- c(1:50)
+for(i in 1: length(confProps)){
+  confProps[i] <- basePr + (0.02 * (i-1))
+}
+
+lengths <- c(1:50)
+for(i in 1: length(confProps)){
+  lengths[i] <- intLen(confIntMeanVar(sample1, S, confProps[i]))
+}
+interval1 <- confIntMeanVar(sample1, S, confProps[20]); interval1
+interval1 <- confIntMeanVar(sample1, S, confProps[40]); interval1
+
+lengths
+plot(lengths, confProps, col = "green")
 
