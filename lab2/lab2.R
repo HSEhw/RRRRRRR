@@ -8,6 +8,7 @@ confIntMeanVar <- function(arr, S, G){
 # доверительный интервал для математического ожидания при известной дисперсии
 # S - Sigma (variance)
 # G - Gamma  
+  na.omit(arr)
   N = length(arr)
   d = qnorm(G) * S /sqrt(N); d # Delta
     
@@ -22,6 +23,7 @@ confIntMeanwVar <- function(arr, G){
 # Confidence interval for mean without variance
 # доверительный интервал для математического ожидания при неизвестной дисперсии
 # G - Gamma  
+  na.omit(arr)
   N = length(arr)
   t = qt(G, N-1); t
   D = var(arr)          # Sample Variance
@@ -39,6 +41,7 @@ confIntVarwMean <- function(arr, G){
 # Confidence interval for variance without mean
 # доверительный интервал для математического ожидания при неизвестной дисперсии
 # G - Gamma  
+  na.omit(arr)
   N  = length(arr)
   a1 = (1 - G)/2
   a2 = (1 + G)/2
@@ -61,6 +64,7 @@ intLen <- function(int){
 
 
 plot1 <- function(arr1, arr2, S){
+  na.omit(arr1); na.omit(arr2)
   confProps <- seq(from=0.50, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
@@ -77,6 +81,7 @@ plot1 <- function(arr1, arr2, S){
 
 
 plot2 <- function(arr1, arr2, S){
+  na.omit(arr1); na.omit(arr2)
   confProps <- seq(from=0.50, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
@@ -94,6 +99,7 @@ plot2 <- function(arr1, arr2, S){
 
 
 plot3 <- function(arr1, arr2, S){
+  na.omit(arr1); na.omit(arr2)
   confProps <- seq(from=0.50, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
