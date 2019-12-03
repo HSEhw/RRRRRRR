@@ -12,8 +12,8 @@ confIntMeanVar <- function(arr, S, G){
   N = length(arr)
   d = qnorm(G) * S /sqrt(N); d # Delta
     
-  L = mean(sample1) - d; L # Left 
-  R = mean(sample1) + d; R # Right
+  L = mean(arr) - d; L # Left 
+  R = mean(arr) + d; R # Right
   #res = c(L, R); res
   return(c(L, R))
 }
@@ -30,8 +30,8 @@ confIntMeanwVar <- function(arr, G){
   S = sqrt((N/(N-1))*D) # Corrected Sigma
   d = t * S /sqrt(N); d # Delta
   
-  L = mean(sample1) - d; L # Left 
-  R = mean(sample1) + d; R # Right
+  L = mean(arr) - d; L # Left 
+  R = mean(arr) + d; R # Right
   #res = c(L, R); res
   return(c(L, R))
 }
