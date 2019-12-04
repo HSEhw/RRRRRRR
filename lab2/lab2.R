@@ -8,9 +8,9 @@ confIntMeanVar <- function(arr, S, G){
 # доверительный интервал для математического ожидания при известной дисперсии
 # S - Sigma (variance)
 # G - Gamma  
-  na.omit(arr)
+  arr=na.omit(arr)
   N = length(arr)
-  d = qnorm(G) * S /sqrt(N); d # Delta
+  d = qnorm(1-(1-G)/2) * S /sqrt(N); d # Delta
     
   L = mean(sample1) - d; L # Left 
   R = mean(sample1) + d; R # Right
@@ -23,9 +23,9 @@ confIntMeanwVar <- function(arr, G){
 # Confidence interval for mean without variance
 # доверительный интервал для математического ожидания при неизвестной дисперсии
 # G - Gamma  
-  na.omit(arr)
+  arr=na.omit(arr)
   N = length(arr)
-  t = qt(G, N-1); t
+  t = qt(1-(1-G)/2, N-1); t
   D = var(arr)          # Sample Variance
   S = sqrt((N/(N-1))*D) # Corrected Sigma
   d = t * S /sqrt(N); d # Delta
@@ -41,7 +41,7 @@ confIntVarwMean <- function(arr, G){
 # Confidence interval for variance without mean
 # доверительный интервал для математического ожидания при неизвестной дисперсии
 # G - Gamma  
-  na.omit(arr)
+  arr=na.omit(arr)
   N  = length(arr)
   a1 = (1 - G)/2
   a2 = (1 + G)/2
@@ -64,8 +64,8 @@ intLen <- function(int){
 
 
 plot1 <- function(arr1, arr2, S){
-  na.omit(arr1); na.omit(arr2)
-  confProps <- seq(from=0.50, to=1, by=0.02); confProps
+  arr1=na.omit(arr1); arr2=na.omit(arr2)
+  confProps <- seq(from=0, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
   for(i in 1: length(confProps)){
@@ -81,15 +81,16 @@ plot1 <- function(arr1, arr2, S){
 
 
 plot2 <- function(arr1, arr2, S){
-  na.omit(arr1); na.omit(arr2)
-  confProps <- seq(from=0.50, to=1, by=0.02); confProps
+  arr1=na.omit(arr1); arr2=na.omit(arr2)
+  confProps <- seq(from=0, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
   for(i in 1: length(confProps)){
     lengths1[i] <- intLen(confIntMeanwVar(arr1, confProps[i]))
     lengths2[i] <- intLen(confIntMeanwVar(arr2, confProps[i]))
-  }; lengths
-  
+  }
+  print(confProps)
+  print(lengths1)
   plot(confProps, lengths2,  col = "red", type = "l", 
        xlab = "Дов. вер-ть", 
        ylab = "дов. интервал",
@@ -99,14 +100,14 @@ plot2 <- function(arr1, arr2, S){
 
 
 plot3 <- function(arr1, arr2, S){
-  na.omit(arr1); na.omit(arr2)
-  confProps <- seq(from=0.50, to=1, by=0.02); confProps
+  arr1=na.omit(arr1); arr2=na.omit(arr2)
+  confProps <- seq(from=0, to=1, by=0.02); confProps
   lengths1 <- c(1:length(confProps))
   lengths2 <- c(1:length(confProps))
   for(i in 1: length(confProps)){
     lengths1[i] <- intLen(confIntVarwMean(arr1, confProps[i]))
     lengths2[i] <- intLen(confIntVarwMean(arr2, confProps[i]))
-  }; lengths
+  }
   plot(confProps, lengths2,  col = "red", type = "l", 
        xlab = "Дов. вер-ть", 
        ylab = "дов. интервал",
@@ -122,6 +123,7 @@ G = 0.90 # Gamma
 N1 = 100
 N2 = 200
 
+set.seed(15)
 sample1 <- rnorm(N1, mean = M, sd = S); sample1
 sample2 <- rnorm(N2, mean = M, sd = S); sample2
 
@@ -141,3 +143,4 @@ par(mfcol=c(3, 1))
 plot1(sample1,sample2, S)
 plot2(sample1,sample2, S)
 plot3(sample1,sample2, S)
+
