@@ -39,7 +39,7 @@ confIntMeanwVar <- function(arr, G){
 
 confIntVarwMean <- function(arr, G){
 # Confidence interval for variance without mean
-# доверительный интервал для математического ожидания при неизвестной дисперсии
+# вычисляет доверительный интервал для дисперсии при неизвестном математическом ожидании
 # G - Gamma  
   arr=na.omit(arr)
   N  = length(arr)
@@ -71,7 +71,7 @@ plot1 <- function(arr1, arr2, S){
   for(i in 1: length(confProps)){
     lengths1[i] <- intLen(confIntMeanVar(arr1, S, confProps[i]))
     lengths2[i] <- intLen(confIntMeanVar(arr2, S, confProps[i]))
-  }; lengths
+  }
   plot(confProps, lengths2,  col = "red", type = "l", 
        xlab = "Дов. вер-ть", 
        ylab = "дов. интервал",
@@ -89,8 +89,6 @@ plot2 <- function(arr1, arr2, S){
     lengths1[i] <- intLen(confIntMeanwVar(arr1, confProps[i]))
     lengths2[i] <- intLen(confIntMeanwVar(arr2, confProps[i]))
   }
-  print(confProps)
-  print(lengths1)
   plot(confProps, lengths2,  col = "red", type = "l", 
        xlab = "Дов. вер-ть", 
        ylab = "дов. интервал",
@@ -143,4 +141,4 @@ par(mfcol=c(3, 1))
 plot1(sample1,sample2, S)
 plot2(sample1,sample2, S)
 plot3(sample1,sample2, S)
-
+    
